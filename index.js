@@ -65,12 +65,12 @@ const lex = require('greenlock-express').create({
 });
 
 // handles acme-challenge and redirects to https
-http.createServer(lex.middleware(require('redirect-https')())).listen(PORT, function () {
+http.createServer(lex.middleware(require('redirect-https')())).listen(PORT, HOST, function () {
     console.log("Listening for ACME http-01 challenges on", this.address());
 });
    
 // handles your app
-https.createServer(lex.httpsOptions, lex.middleware(app)).listen(SPORT, function () {
+https.createServer(lex.httpsOptions, lex.middleware(app)).listen(SPORT, HOST, function () {
     console.log("Listening for ACME tls-sni-01 challenges and serve app on", this.address());
 });
 
