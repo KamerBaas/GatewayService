@@ -4,11 +4,14 @@ const algoliasearch = require('algoliasearch');
 const request = require('request');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const http = require('http');
+const https = require('https');
 
 const client = algoliasearch('8HYBSNX4Q5', '5d225d11ef765b21fb13bc97688801ef');
 
 // Constants
 const PORT = 8080;
+const SPORT = 4330;
 const HOST = '0.0.0.0';
 
 // App
@@ -43,5 +46,34 @@ app.get('/ping', (req, res) => {
     res.send('Healthy');
 });
 
-app.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);
+const approveDomains = (opts, certs, cb) => {
+    if (certs) {
+      opts.domains = certs.altnames;
+    } else {
+      opts.email = 'info@weijland.it';
+      opts.agreeTos = true;
+    }
+   
+    cb(null, { options: opts, certs: certs });
+}
+
+const lex = require('greenlock-express').create({
+    server: 'staging',
+    challenges: { 'http-01': require('le-challenge-fs').create({ webrootPath: '/tmp/acme-challenges' }) },
+    store: require('le-store-certbot').create({ webrootPath: '/tmp/acme-challenges' }),
+    approveDomains: ['kamerbaas.nl']//approveDomains
+});
+
+// handles acme-challenge and redirects to https
+http.createServer(lex.middleware(require('redirect-https')())).listen(PORT, function () {
+    console.log("Listening for ACME http-01 challenges on", this.address());
+});
+   
+// handles your app
+https.createServer(lex.httpsOptions, lex.middleware(app)).listen(SPORT, function () {
+    console.log("Listening for ACME tls-sni-01 challenges and serve app on", this.address());
+});
+
+//app.listen(PORT, HOST);
+
+//console.log(`Running on http://${HOST}:${PORT}`);
