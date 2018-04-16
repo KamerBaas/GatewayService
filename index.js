@@ -61,7 +61,7 @@ const lex = require('greenlock-express').create({
     server: 'staging',
     challenges: { 'http-01': require('le-challenge-fs').create({ webrootPath: '/tmp/acme-challenges' }) },
     store: require('le-store-certbot').create({ webrootPath: '/tmp/acme-challenges' }),
-    approveDomains: ['kamerbaas.nl']//approveDomains
+    approveDomains: ['gateway.kamerbaas.nl']//approveDomains
 });
 
 // handles acme-challenge and redirects to https
