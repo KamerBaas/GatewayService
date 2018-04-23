@@ -21,7 +21,6 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static('static'));
 app.use(bodyParser.json());
 
 // API's
@@ -51,8 +50,8 @@ app.get('/ping', (req, res) => {
 app.listen(PORT, HOST);
 
 const options = {
-    cert: fs.readFileSync('./ssl/gateway.kamerbaas.nl/fullchain.pem'),
-    key: fs.readFileSync('./ssl/gateway.kamerbaas.nl/privkey.pem')
+    cert: fs.readFileSync(__dirname + '/ssl/gateway.kamerbaas.nl/fullchain.pem', 'utf8'),
+    key: fs.readFileSync(__dirname + '/ssl/gateway.kamerbaas.nl/privkey.pem', 'utf8')
 };
 https.createServer(options, app).listen(SPORT);
 
