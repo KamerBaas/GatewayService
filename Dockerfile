@@ -12,5 +12,7 @@ COPY . .
 
 EXPOSE 8080
 
+EXPOSE 4330
+
 CMD [ "npm", "start" ]
 
