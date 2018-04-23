@@ -50,8 +50,9 @@ app.get('/ping', (req, res) => {
 app.listen(PORT, HOST);
 
 const options = {
-    cert: fs.readFileSync(__dirname + '/ssl/gateway.kamerbaas.nl/fullchain.pem', 'utf8'),
-    key: fs.readFileSync(__dirname + '/ssl/gateway.kamerbaas.nl/privkey.pem', 'utf8')
+    cert: fs.readFileSync(__dirname + '/ssl/gateway.kamerbaas.nl/fullchain.pem'),
+    key: fs.readFileSync(__dirname + '/ssl/gateway.kamerbaas.nl/privkey.pem'),
+    ca: fs.readFileSync(__dirname + '/ssl/gateway.kamerbaas.nl/chain.pem')
 };
 https.createServer(options, app).listen(SPORT);
 
