@@ -10,9 +10,7 @@ RUN apk add --no-cache git && \
 
 COPY . .
 
-EXPOSE 8080
-
-EXPOSE 4330
+EXPOSE 8080 4330
 
 CMD [ "npm", "start" ]
 
