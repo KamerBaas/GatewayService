@@ -47,13 +47,18 @@ app.get('/ping', (req, res) => {
     res.send('Healthy');
 });
 
-app.listen(PORT, HOST);
+//app.listen(PORT, HOST);
 
 const options = {
     cert: fs.readFileSync(__dirname + '/ssl/gateway.kamerbaas.nl/fullchain.pem'),
     key: fs.readFileSync(__dirname + '/ssl/gateway.kamerbaas.nl/privkey.pem'),
     ca: fs.readFileSync(__dirname + '/ssl/gateway.kamerbaas.nl/chain.pem')
 };
-https.createServer(options, app).listen(SPORT);
+
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(options, app);
+
+httpServer.listen(PORT, HOST);
+httpsServer.listen(SPORT, HOST);
 
 console.log(`Running on http://${HOST}:${PORT}`);
