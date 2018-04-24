@@ -1,0 +1,37 @@
+steps:
+# Build
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'build'
+  - '--file=Dockerfile'
+  - '--tag=gcr.io/$PROJECT_ID/kb-gateway:1'
+  - '.'
+  id: '1'
+# Push
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', 'gcr.io/$PROJECT_ID/kb-gateway:1', 'gcr.io/$PROJECT_ID/kb-gateway']
+  wait_for: ['1']
+  id: 'latest'
+# Deploy
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+  - set
+  - image
+  - deployment
+  - deployment/kb-gateway
+  - kb-gateway=gcr.io/$PROJECT_ID/kb-gateway:latest
+  - --all
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=europe-west4-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=service-cluster'
+  wait_for: ['latest']
+  id: 'deploy'
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+  - rollout
+  - status
+  - deployment/kb-gateway
+  wait_for: ['deploy']
+
+# Deployment/kb-auth authservice=gcr.io/search-service-199212/authservice:latest --all
+# kubectl rollout status deployment/kb-auth
