@@ -47,6 +47,10 @@ app.get('/ping', (req, res) => {
     res.send('Healthy');
 });
 
+app.get('/', (req, res) => {
+    res.send("ok");
+})
+
 //app.listen(PORT, HOST);
 
 const options = {
