@@ -9,7 +9,7 @@ steps:
   id: '1'
 # Push
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['tag', 'gcr.io/$PROJECT_ID/kb-gateway:1', 'gcr.io/$PROJECT_ID/kb-gateway']
+  args: ['tag', 'gcr.io/$PROJECT_ID/kb-gateway:1', 'gcr.io/$PROJECT_ID/kb-gateway:latest']
   wait_for: ['1']
   id: 'latest'
 # Deploy
