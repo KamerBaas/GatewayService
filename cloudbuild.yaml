@@ -31,7 +31,7 @@ steps:
   - status
   - deployment/kb-gateway
   wait_for: ['deploy']
-image:
+images:
   - 'gcr.io/$PROJECT_ID/kb-gateway:latest'
 
 # Deployment/kb-auth authservice=gcr.io/search-service-199212/authservice:latest --all
