@@ -65,4 +65,8 @@ httpsServer.listen(SPORT, HOST);
 // nieuw
 const l = "a";
 
+const f = (r) => {
+    return r;
+}
+
 console.log(`Running on http://${HOST}:${PORT}`);
