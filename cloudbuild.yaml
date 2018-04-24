@@ -17,7 +17,6 @@ steps:
   args:
   - set
   - image
-  - deployment
   - deployment/kb-gateway
   - kb-gateway=gcr.io/$PROJECT_ID/kb-gateway:latest
   - --all
