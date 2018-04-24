@@ -49,7 +49,6 @@ app.get('/ping', (req, res) => {
 
 app.get('/', (req, res) => {
     res.send("ok");
-    // Hup
 })
 
 //app.listen(PORT, HOST);
