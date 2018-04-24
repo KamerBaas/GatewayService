@@ -44,7 +44,7 @@ app.post('/profile', (req, res) => {
 });
 
 app.get('/ping', (req, res) => {
-    res.send('Healthy');
+    res.send('Healthy 2');
 });
 
 app.get('/', (req, res) => {
