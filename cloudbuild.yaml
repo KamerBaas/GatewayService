@@ -7,11 +7,16 @@ steps:
   - '--tag=gcr.io/$PROJECT_ID/kb-gateway:1'
   - '.'
   id: '1'
-# Push
+# Tag
 - name: 'gcr.io/cloud-builders/docker'
   args: ['tag', 'gcr.io/$PROJECT_ID/kb-gateway:1', 'gcr.io/$PROJECT_ID/kb-gateway:latest']
   wait_for: ['1']
-  id: 'latest'
+  id: 'tag'
+# Push
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/kb-gateway:latest']
+  wait_for: ['tag']
+  id: 'push'
 # Deploy
 - name: 'gcr.io/cloud-builders/kubectl'
   args:
@@ -23,7 +28,7 @@ steps:
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=europe-west4-a'
   - 'CLOUDSDK_CONTAINER_CLUSTER=service-cluster'
-  wait_for: ['latest']
+  wait_for: ['push']
   id: 'deploy'
 - name: 'gcr.io/cloud-builders/kubectl'
   args:
