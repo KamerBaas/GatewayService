@@ -39,7 +39,7 @@ app.post('/profile', (req, res) => {
     // }
     // const profile = req.body.profile;
     // client.initIndex('profiles').partialUpdateObject();
-    console.log("Request to profile service", req.body);
+    console.log("Request to search service", req.body);
     request.post({ url: 'http://kb-search/profile', json: req.body }).pipe(res);
 });
 
