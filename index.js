@@ -28,6 +28,10 @@ app.get('/search', (req, res) => {
     request('http://kb-search/search?term=' + req.query.term).pipe(res);
 });
 
+app.get('/stress', (req, res) => {
+    request('http://kb-search/stress').pipe(res);
+});
+
 app.post('/auth', (req, res) => {
     // Expects req.body.idtoken: console.log(req.body.idtoken);
     request.post({ url: 'http://kb-auth/handler.php', json: { idtoken: req.body.idtoken }}).pipe(res);
