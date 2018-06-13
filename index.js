@@ -67,6 +67,15 @@ app.post('/profile', (req, res) => {
     request.post({ url: 'http://kb-search/profile', json: req.body }).pipe(res);
 });
 
+app.get('/profile/:id/', (req, res) => {
+    // if(!req.body.profile || !req.body.profile.objectID){
+    //     res.status(400).send('Please provide req.body.profile with property objectID');
+    // }
+    // const profile = req.body.profile;
+    // client.initIndex('profiles').partialUpdateObject();
+    request.get({ url: 'http://kb-search/profile/' + req.params.id + '/?idtoken=' + req.query.idtoken, json: req.body }).pipe(res);
+});
+
 app.get('/ping', (req, res) => {
     res.send('Healthy 3');
 });
