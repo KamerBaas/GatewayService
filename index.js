@@ -73,7 +73,9 @@ app.get('/profile/:id/', (req, res) => {
     // }
     // const profile = req.body.profile;
     // client.initIndex('profiles').partialUpdateObject();
-    request.get({ url: 'http://kb-profile/profile/' + req.params.id + '/?idtoken=' + req.query.idtoken, json: req.body }).pipe(res);
+    const url = 'http://kb-profile/profile/' + req.params.id + '/?idtoken=' + req.query.idtoken;
+    console.log('entered gateway profile id: ' + url);
+    request.get({ url: url, json: req.body }).pipe(res);
 });
 
 app.get('/ping', (req, res) => {
